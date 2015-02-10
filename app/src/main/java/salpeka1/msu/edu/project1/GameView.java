@@ -13,7 +13,7 @@ import android.view.View;
  */
 public class GameView extends View {
 
-    private Paint paint;
+    private Game game;
 
     public GameView(Context context) {
         super(context);
@@ -31,8 +31,7 @@ public class GameView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(0xff0000ee);
+        game = new Game();
     }
 
 
@@ -40,8 +39,7 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRect(0,0,100,100, paint);
-
+        game.draw(canvas);
     }
 
 
