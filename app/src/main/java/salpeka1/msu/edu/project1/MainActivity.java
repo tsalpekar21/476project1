@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClickStart(View view)
     {
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, BirdSelectActivity.class);
         startActivity(intent);
     }
 

@@ -15,10 +15,15 @@ import android.view.View;
 
 public class BirdSelectActivity extends ActionBarActivity {
 
+    private BirdView birdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bird_select);
+
+        birdView = (BirdView) findViewById(R.id.viewBird);
+
     }
 
 
