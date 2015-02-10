@@ -3,6 +3,8 @@ package salpeka1.msu.edu.project1;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import java.util.ArrayList;
+
 /**
  * Created by Alex on 2/10/2015.
  */
@@ -12,6 +14,8 @@ public class Game {
     static final float GAME_FIELD_SCALE = 0.95f;
     private float gameField;
     private Paint paintBorder;  // paint object to outline playing field
+
+    public ArrayList<Bird> gameBirds;  // array of birds w/ locations to push into as they are placed
 
     public Game() {
         paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
