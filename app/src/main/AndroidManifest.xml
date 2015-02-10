@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BirdSelectActivity"
+            android:label="@string/title_activity_bird_select" >
+        </activity>
+        <activity
+            android:name=".FinishedActivity"
+            android:label="@string/title_activity_finished" >
+        </activity>
+        <activity
+            android:name=".GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
     </application>
 
 </manifest>
