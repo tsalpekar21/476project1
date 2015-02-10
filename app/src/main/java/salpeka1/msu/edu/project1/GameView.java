@@ -2,8 +2,8 @@ package salpeka1.msu.edu.project1;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -41,6 +41,7 @@ public class GameView extends View {
 
         game.draw(canvas);
     }
+
 
 
 }

@@ -14,15 +14,19 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_weight="1.5"
+        android:gravity="center"
+        style="?android:attr/buttonBarStyle"
+        android:layout_gravity="top">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/set_button"
             android:id="@+id/buttonSetBird"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:onClick="onClickSet" />
 
         <Button
             android:layout_width="wrap_content"
@@ -30,8 +34,9 @@
             android:text="@string/quit_button"
             android:id="@+id/buttonQuit"
             android:layout_gravity="right|center_vertical"
-            android:elegantTextHeight="false"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:onClick="onClickQuit" />
 
     </LinearLayout>
 
