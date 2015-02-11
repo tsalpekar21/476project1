@@ -1,0 +1,31 @@
+
+Project 1 Submission
+
+Group Name:   Code Monkeys
+
+When you have completed the project, complete the following form and include it with your project. Include this file as a text file in the folder with your project when you turn it in. 
+
+
+Member 1: Aasiruddin Walajahi
+
+Responsiblity: Responsible for the starting and ending acitivies.
+
+
+
+Member 2: Taney Salpekar
+
+Responsiblity: Responsible for the bird selection and gameplay activities.
+
+
+
+Member 3: Alex Kambeitz
+
+Responsiblity: Setup the main skeleton of the game.
+
+
+
+Member 4 (if applicable): 
+
+Responsiblity:
+
+

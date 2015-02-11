@@ -2,7 +2,9 @@
 <resources>
 
     <string name="app_name">Project1</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title">Flocking Birds!</string>
+    <string name="player1">Player 1 :</string>
+    <string name="player2">Player 2 :</string>
     <string name="action_settings">Settings</string>
     <string name="set_button">Set Bird</string>
     <string name="quit_button">End Game</string>
@@ -10,8 +12,10 @@
     <string name="title_activity_finished">Finished</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="dummy">Click here</string>
-    <string name="finished">Finished Screen</string>
+    <string name="continue_to_game">Continue</string>
+    <string name="finished">Player 1 Wins !</string>
     <string name="select">Bird Select Screen</string>
     <string name="game">Return to Game</string>
+    <string name="next_round">Next Round</string>
 
 </resources>
