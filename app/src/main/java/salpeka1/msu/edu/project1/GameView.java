@@ -30,18 +30,33 @@ public class GameView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        game = new Game(getContext());
+
+        game = new Game(getContext(), this);
+
+        Play();
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         game.draw(canvas);
 
     }
 
+    public Game.GameState getGameState(){
+        return game.getPlayState();
+    }
+    public void setGameState(Game.GameState playstate){
+        game.setPlayState(playstate);
+    }
+    public void Play(){
+        switch(game.getPlayState()){
+            case init:
+
+
+        }
+    }
 
 
 }
