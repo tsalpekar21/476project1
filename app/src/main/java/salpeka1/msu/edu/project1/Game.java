@@ -1,9 +1,12 @@
 package salpeka1.msu.edu.project1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by Alex on 2/10/2015.
@@ -15,14 +18,57 @@ public class Game {
     private float gameField;
     private Paint paintBorder;  // paint object to outline playing field
 
+    // init: from opening activity. initiate game class, hand off to bird selection
+    // birdselect: hand off to bird selection
+    // roundA/B: players place bird, then check if end condition. if not, up to birdselect
+    // end: game over. hand off to end screen
+    public enum GameState {init, birdselect, roundA, roundB, end}
+
+    private GameState playState;
+    GameView view;
+
+    private class Player {
+
+        private Bird currBird;
+        private String name;
+        private String ID;
+
+        public Bird getCurrBird() {
+            return currBird;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getID() {
+            return ID;
+        }
+
+        public void setCurrBird(Bird currBird) {
+            this.currBird = currBird;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setID(String ID) {
+            this.ID = ID;
+        }
+    }
+
     public ArrayList<Bird> gameBirds;  // array of birds w/ locations to push into as they are placed
 
-    public Game() {
+    public Game(Context context, GameView view_context) {
         paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintBorder.setColor(0xff0000ff);  // hex value for blue paint
+        paintBorder.setColor(0xffcbe5f8);  // hex value for sky blue paint
         paintBorder.setStrokeWidth(5.f);
 
         gameField = 0;
+        playState = GameState.init;
+
+        view = view_context;
 
     }
 
@@ -37,5 +83,13 @@ public class Game {
         float marginY = (hit-gameField)/2;  // find space left in view, split in half to use as margins on field of play
 
         canvas.drawRect(marginX, marginY, marginX + gameField, marginY + gameField, paintBorder);
+    }
+
+    public void setPlayState(GameState playState) {
+        this.playState = playState;
+    }
+
+    public GameState getPlayState() {
+        return playState;
     }
 }

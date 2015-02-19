@@ -15,14 +15,22 @@ import android.view.View;
 
 public class GameActivity extends ActionBarActivity {
 
+    private GameView gameView;  // reference to the custom view that handles the game class
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
+        gameView = (GameView)findViewById(R.id.viewGame);
+     //   onGameStateChange(gameView);
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        onGameStateChange(gameView);  // when this activity takes the foreground, check the state of the game
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,6 +68,23 @@ public class GameActivity extends ActionBarActivity {
         Intent intent = new Intent(this, BirdSelectActivity.class);
         intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+
+    // switch statement to delegate control of the game to either a different activity or to the game view's onTouch event controllers
+    // with each switch, update the state of the game as appropriate.
+    // calls through gameview to get game class' state of play, represented as enums {init, birdselect, roundA, roundB, end}
+    public void onGameStateChange(View view){
+        switch(gameView.getGameState()){
+            case init:
+                Intent intent = new Intent(this, BirdSelectActivity.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                gameView.setGameState(Game.GameState.roundA);  // first player goes after this init
+                startActivity(intent);
+                break;
+            default:
+                break; // onReturn calls this to find current state. in init and birdselect, start needed activities. on play, hand off to view's touch handler. on finish, start ending activity
+        }
     }
 
 }
