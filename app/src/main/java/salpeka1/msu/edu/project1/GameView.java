@@ -2,7 +2,6 @@ package salpeka1.msu.edu.project1;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,7 +30,7 @@ public class GameView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        game = new Game();
+        game = new Game(getContext());
     }
 
 
@@ -40,6 +39,7 @@ public class GameView extends View {
         super.onDraw(canvas);
 
         game.draw(canvas);
+
     }
 
 

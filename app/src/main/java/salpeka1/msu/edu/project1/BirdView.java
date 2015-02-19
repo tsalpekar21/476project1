@@ -29,15 +29,12 @@ import android.view.View;
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        bird = new Bird(getContext(), this, R.drawable.parrot);
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        bird.draw(canvas);
 
     }
 

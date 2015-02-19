@@ -11,11 +11,15 @@
     <string name="title_activity_bird_select">BirdSelect</string>
     <string name="title_activity_finished">Finished</string>
     <string name="title_activity_game">GameActivity</string>
-    <string name="dummy">Click here</string>
     <string name="continue_to_game">Continue</string>
     <string name="finished">Player 1 Wins !</string>
     <string name="select">Bird Select Screen</string>
     <string name="game">Return to Game</string>
     <string name="next_round">Next Round</string>
+    <string name="ostrich">Ostrich</string>
+    <string name="parrot">parrot</string>
+    <string name="robin">robin</string>
+    <string name="swallow">swallow</string>
+    <string name="hummingbird">hummingbird</string>
 
 </resources>
