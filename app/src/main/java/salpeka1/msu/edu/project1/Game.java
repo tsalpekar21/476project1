@@ -64,6 +64,7 @@ public class Game {
         paintBorder.setColor(0xffcbe5f8);  // hex value for sky blue paint
         paintBorder.setStrokeWidth(5.f);
 
+        gameBirds = new ArrayList<Bird>();
         gameBirds.add(new Bird(context, R.drawable.ostrich, this));
 
         gameField = 0;

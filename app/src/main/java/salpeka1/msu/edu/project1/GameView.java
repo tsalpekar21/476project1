@@ -50,9 +50,11 @@ public class GameView extends View {
     public void setGameState(Game.GameState playstate){
         game.setPlayState(playstate);
     }
+
     public void Play(){
         switch(game.getPlayState()){
             case init:
+                break;
 
 
         }
