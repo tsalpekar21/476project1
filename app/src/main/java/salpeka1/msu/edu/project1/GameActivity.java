@@ -3,6 +3,7 @@ package salpeka1.msu.edu.project1;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.view.View;
 public class GameActivity extends ActionBarActivity {
 
     private GameView gameView;  // reference to the custom view that handles the game class
+    private String player1;     // varialbe to store player1 name
+    private String player2;     // variable to store player2 name
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,9 @@ public class GameActivity extends ActionBarActivity {
 
         gameView = (GameView)findViewById(R.id.viewGame);
      //   onGameStateChange(gameView);
+
+        player1 = getIntent().getExtras().getString("player1");
+        player2 = getIntent().getExtras().getString("player2");
     }
 
     @Override

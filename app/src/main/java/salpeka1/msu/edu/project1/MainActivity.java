@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -42,6 +43,15 @@ public class MainActivity extends ActionBarActivity {
     public void onClickStart(View view)
     {
         Intent intent = new Intent(this, GameActivity.class);
+
+        // Passing the player names into the Intent
+        EditText player1 = (EditText) findViewById(R.id.player1);
+        EditText player2 = (EditText) findViewById(R.id.player2);
+        String player1_str = player1.getText().toString();
+        String player2_str = player2.getText().toString();
+        intent.putExtra("player1", player1_str);
+        intent.putExtra("player2", player2_str);
+
         startActivity(intent);
     }
 
