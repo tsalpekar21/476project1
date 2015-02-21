@@ -26,11 +26,12 @@ public class Game {
     private GameState playState;
     GameView view;
 
+    Player P1, P2;
     private class Player {
 
         private Bird currBird;
         private String name;
-        private String ID;
+        private int ID;
 
         public Bird getCurrBird() {
             return currBird;
@@ -40,7 +41,7 @@ public class Game {
             return name;
         }
 
-        public String getID() {
+        public int getID() {
             return ID;
         }
 
@@ -52,10 +53,11 @@ public class Game {
             this.name = name;
         }
 
-        public void setID(String ID) {
+        public void setID(int ID) {
             this.ID = ID;
         }
-    }
+
+        }
 
     public ArrayList<Bird> gameBirds;  // array of birds w/ locations to push into as they are placed
 
@@ -71,6 +73,18 @@ public class Game {
         playState = GameState.init;
 
         view = view_context;
+
+    }
+
+    public void SetPlayers(String name1, String name2){
+
+        P1 = new Player();
+        P1.setName(name1);
+        P1.setID(1);
+
+        P2 = new Player();
+        P2.setName(name2);
+        P2.setID(2);
 
     }
 

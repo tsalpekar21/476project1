@@ -18,14 +18,20 @@ public class Bird {
 
     private Bitmap imageBird;  // image of the bird to draw in
 
-    private Game game;
+    Game game;
 
-    public Bird(Context context, int id, Game game) {
+    public Bird(Context context, int id, Game pgame) {
         X = Y = .5f;
-        this.game = game;
 
+        this.game = pgame;
         imageBird = BitmapFactory.decodeResource(context.getResources(), id);
 
+    }
+
+    public Bird(Context context, int id) {
+        X = Y = .5f;
+
+        imageBird = BitmapFactory.decodeResource(context.getResources(), id);
     }
 
     public void draw(Canvas canvas) {

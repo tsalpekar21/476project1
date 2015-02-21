@@ -5,7 +5,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 
 /*
@@ -15,6 +17,10 @@ import android.view.View;
 
 public class BirdSelectActivity extends ActionBarActivity {
 
+    private String player1, player2;
+    private int P1Bird, P2Bird;
+    private TextView t;
+    private boolean returnSentinel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,20 @@ public class BirdSelectActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        t = (TextView)findViewById(R.id.playerToSelect);
+        player1 = getIntent().getExtras().getString("player1");
+        player2 = getIntent().getExtras().getString("player2");
+
+        t.setText(player1+", Choose a Bird");
+        //   onGameStateChange(gameView);
+
+        returnSentinel = false;
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,9 +68,42 @@ public class BirdSelectActivity extends ActionBarActivity {
 
     public void onClickGame(View view)
     {
-        // this button click will, instead of pulling up BirdSelectActivity, lock a bird's location in on the game field and call a check for endgame conditions
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
+        // unused.
+        //TODO: remove the button from this view. function returns to GameActivity on P2's choice of bird
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        float relX = (event.getX());
+        float relY = (event.getY());
+
+        switch(event.getActionMasked()){
+            case MotionEvent.ACTION_DOWN:
+                // TODO: Check if a bird was actually touched, and if so which one. Save the bird's ID value to pass back to Game class
+                // TODO: If this was P1's bird choice, allow P2 to choose next. Otherwise, allow return to GameActivity
+                Selected(1);
+
+                return true;
+
+        }
+
+        return false;
+    }
+
+    public void Selected(int birdID){
+        if(!returnSentinel){ // on p1's choice
+            P1Bird = birdID;
+            t.setText(player2+", Now You Choose a Bird");
+            returnSentinel = true; // ready to return on next call here
+        }
+        else{
+            P2Bird = birdID;
+            Intent intent = new Intent(this, GameActivity.class);
+            intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            intent.putExtra("p1bird",P1Bird);
+            intent.putExtra("p2bird",P2Bird);
+            startActivity(intent);
+        }
     }
 }

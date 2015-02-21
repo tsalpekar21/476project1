@@ -19,6 +19,7 @@ public class GameActivity extends ActionBarActivity {
     private GameView gameView;  // reference to the custom view that handles the game class
     private String player1;     // varialbe to store player1 name
     private String player2;     // variable to store player2 name
+    private int P1Bird, P2Bird;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +29,12 @@ public class GameActivity extends ActionBarActivity {
         gameView = (GameView)findViewById(R.id.viewGame);
      //   onGameStateChange(gameView);
 
-        player1 = getIntent().getExtras().getString("player1");
-        player2 = getIntent().getExtras().getString("player2");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @Override
@@ -83,12 +88,28 @@ public class GameActivity extends ActionBarActivity {
     public void onGameStateChange(View view){
         switch(gameView.getGameState()){
             case init:
+
+                player1 = getIntent().getExtras().getString("player1");
+                player2 = getIntent().getExtras().getString("player2");
+                gameView.getGameObject().SetPlayers(player1, player2);  // construct player objects and set their names
+
                 Intent intent = new Intent(this, BirdSelectActivity.class);
                 intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("player1", player1);
+                intent.putExtra("player2", player2);
                 gameView.setGameState(Game.GameState.roundA);  // first player goes after this init
                 startActivity(intent);
+
                 break;
+
+            case roundA:
+
+                P1Bird = getIntent().getExtras().getInt("p1bird");
+                P2Bird = getIntent().getExtras().getInt("p2bird");
+
+
             default:
+
                 break; // onReturn calls this to find current state. in init and birdselect, start needed activities. on play, hand off to view's touch handler. on finish, start ending activity
         }
     }

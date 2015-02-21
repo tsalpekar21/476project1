@@ -9,9 +9,10 @@
     <TextView android:text="@string/select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/playerToSelect"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp" />
 
 
     <LinearLayout
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/tophalf"
-        android:layout_below="@id/textView2">
+        android:layout_below="@id/playerToSelect">
 
         <ImageView
             android:layout_width="0dp"
