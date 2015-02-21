@@ -38,6 +38,8 @@ public class GameActivity extends ActionBarActivity {
     }
 
     @Override
+    // Called anytime this activity takes the foreground (from initial screen and after bird selects)
+    // makes a call to onGameStateChange, which decides the next course of action to take for the game, based on the GameView's Game object
     protected void onResume(){
         super.onResume();
         onGameStateChange(gameView);  // when this activity takes the foreground, check the state of the game
@@ -68,17 +70,17 @@ public class GameActivity extends ActionBarActivity {
 
     public void onClickQuit(View view)
     {
-        Intent intent = new Intent(this, FinishedActivity.class);
-        intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);  // adding this flag prevents creating repeat activities if one exists on stack
-        startActivity(intent);
+        //TODO: either reuse the quit button or delete it entirely.
+        //TODO: aside-we need a use for the back button
     }
 
     public void onClickSet(View view)
     {
-        // this button click will, instead of pulling up BirdSelectActivity, lock a bird's location in on the game field and call a check for endgame conditions
-        Intent intent = new Intent(this, BirdSelectActivity.class);
-        intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
+        //TODO: on this button press, we affirm the bird's location and scan for a collision, update the Game State, and call ONGAMESTATECHANGE()
+        // on a collision, update the Game State to reflect that the game has ended.
+        Bird playedBird = gameView.getGameObject().getCurrentBird();
+        //CHECK BIRD COLLISION
+        onGameStateChange(gameView);
     }
 
 
@@ -94,7 +96,7 @@ public class GameActivity extends ActionBarActivity {
                 gameView.getGameObject().SetPlayers(player1, player2);  // construct player objects and set their names
 
                 Intent intent = new Intent(this, BirdSelectActivity.class);
-                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);  // prevent multiples of the same activity. reuse from stack
                 intent.putExtra("player1", player1);
                 intent.putExtra("player2", player2);
                 gameView.setGameState(Game.GameState.roundA);  // first player goes after this init
@@ -102,15 +104,36 @@ public class GameActivity extends ActionBarActivity {
 
                 break;
 
+            case birdselect:
+                intent = new Intent(this, BirdSelectActivity.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("player1", player1);  // pass player names to selection activity for textview to show
+                intent.putExtra("player2", player2);
+                gameView.setGameState(Game.GameState.roundA);  // first player goes after each bird select
+                startActivity(intent);
+
+                break;
+
             case roundA:
 
                 P1Bird = getIntent().getExtras().getInt("p1bird");
-                P2Bird = getIntent().getExtras().getInt("p2bird");
+                P2Bird = getIntent().getExtras().getInt("p2bird");  // get from intent the chosen birds, saved to this activity
 
+                gameView.CreateBird(P1Bird);  // generate P1's bird. This call places the bird object on the end of the game's array of birds and sets it as the current bird to manipulate during touch events
+                gameView.setGameState(Game.GameState.roundB);  // TODO: alternate players
+                break;
+
+            case roundB:
+                gameView.CreateBird(P2Bird);  // generate P2's bird. see above comment
+                gameView.setGameState(Game.GameState.birdselect);  // TODO: alternate players
+                break;
+
+            case end:
+                //TODO: endgame details and restarting of game
 
             default:
 
-                break; // onReturn calls this to find current state. in init and birdselect, start needed activities. on play, hand off to view's touch handler. on finish, start ending activity
+                break; // GameActivity.onReturn() calls this to find current state. in init and birdselect, start bird select activity. on rounds, hand off to view's touch handler. on end, start ending activity
         }
     }
 

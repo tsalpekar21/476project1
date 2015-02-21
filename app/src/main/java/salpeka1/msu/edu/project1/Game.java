@@ -3,6 +3,8 @@ package salpeka1.msu.edu.project1;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -26,48 +28,48 @@ public class Game {
     private GameState playState;
     GameView view;
 
-    Player P1, P2;
-    private class Player {
+    Bird currentBird;
+    float X,Y,Xp,Yp;
 
+    Player P1, P2;
+
+    // custom player class to store player information
+    // currBird may not end up being stored here;
+    // currently, one Bird object is handled at a time, with the rest saved on the array to draw as needed
+    // by tracking which player is up on the GameActivity, we shouldn't need to save the bird here again?
+    private class Player {
         private Bird currBird;
         private String name;
         private int ID;
-
         public Bird getCurrBird() {
             return currBird;
         }
-
         public String getName() {
             return name;
         }
-
         public int getID() {
             return ID;
         }
-
         public void setCurrBird(Bird currBird) {
             this.currBird = currBird;
         }
-
         public void setName(String name) {
             this.name = name;
         }
-
         public void setID(int ID) {
             this.ID = ID;
         }
-
         }
 
     public ArrayList<Bird> gameBirds;  // array of birds w/ locations to push into as they are placed
 
     public Game(Context context, GameView view_context) {
         paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintBorder.setColor(0xffcbe5f8);  // hex value for sky blue paint
+        paintBorder.setColor(0xffcbe5f8);  // hex value for sky blue paint. consider replacing with actual sky image?
         paintBorder.setStrokeWidth(5.f);
 
         gameBirds = new ArrayList<Bird>();
-        gameBirds.add(new Bird(context, R.drawable.ostrich, this));
+   //    gameBirds.add(new Bird(context, R.drawable.ostrich, this));
 
         gameField = 0;
         playState = GameState.init;
@@ -76,8 +78,8 @@ public class Game {
 
     }
 
+    // initial player construction, using names passed down from intent sent to GameActivity.
     public void SetPlayers(String name1, String name2){
-
         P1 = new Player();
         P1.setName(name1);
         P1.setID(1);
@@ -85,9 +87,12 @@ public class Game {
         P2 = new Player();
         P2.setName(name2);
         P2.setID(2);
-
     }
 
+    // draw function.
+    // all but most recently added bird in array should never be modified
+    // most recent bird is referred to with the currentBird member variable. Don't adjust other birds by array index
+    // possibly track the margins and dimensions as class members to use during onTouch?
     public void draw(Canvas canvas){
         int wid = canvas.getWidth();
         int hit = canvas.getHeight();
@@ -105,11 +110,46 @@ public class Game {
         }
     }
 
+    // called from GameActivity, through GameView, to here. Updates current state of the game
     public void setPlayState(GameState playState) {
         this.playState = playState;
     }
-
     public GameState getPlayState() {
         return playState;
+    }
+
+    public void AddBird(Bird bird){
+        gameBirds.add(bird);
+    }
+
+    public Bird getCurrentBird(){
+        return currentBird;
+    }
+
+    // Hande Touch Events.
+    // the main concern here is just moving the bird, which can be done during Action_Move
+    // we don't care about up or down because we'll always be moving the bird, regardless of whether the player has touched it or not
+    // TODO: however, we do need to keep the birds from moving outside the bounds of the playing area
+    // X and Y get the current touch event coordinates
+    // Xp and Yp, declared as members here, are to be used to track the previous X and Y values to decide where objects have moved to (by subtraction)
+    public boolean onTouchEvent(View view, MotionEvent event) {
+        X = (event.getX() );
+        Y = (event.getY() );
+
+        switch (event.getActionMasked()) {
+
+            case MotionEvent.ACTION_DOWN:
+                break;
+
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                // TODO: moving birds within playing area
+                break;
+        }
+
+        return false;
     }
 }

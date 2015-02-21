@@ -28,12 +28,6 @@ public class Bird {
 
     }
 
-    public Bird(Context context, int id) {
-        X = Y = .5f;
-
-        imageBird = BitmapFactory.decodeResource(context.getResources(), id);
-    }
-
     public void draw(Canvas canvas) {
 
         int wid = canvas.getWidth();
