@@ -49,7 +49,7 @@ public class GameView extends View {
         return game.getPlayState();
     }
     public void setGameState(Game.GameState playstate){
-        game.setPlayState(playstate);
+        game.setGameState(playstate);
     }
 
     public Game getGameObject(){return game;}

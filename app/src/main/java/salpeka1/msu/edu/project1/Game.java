@@ -15,10 +15,6 @@ import java.util.ArrayList;
 public class Game {
     // code for gameplay here
 
-    static final float GAME_FIELD_SCALE = 0.95f;
-    private float gameField;
-    private Paint paintBorder;  // paint object to outline playing field
-
     // init: from opening activity. initiate game class, hand off to bird selection
     // birdselect: hand off to bird selection
     // roundA/B: players place bird, then check if end condition. if not, up to birdselect
@@ -28,8 +24,12 @@ public class Game {
     private GameState playState;
     GameView view;
 
-    Bird currentBird;
+    Bird currBird;
     float X,Y,Xp,Yp;
+    float marginX, marginY;
+    static final float GAME_FIELD_SCALE = 0.95f;
+    private float gameField;
+    private Paint paintBorder;  // paint object to outline playing field
 
     Player P1, P2;
 
@@ -91,7 +91,7 @@ public class Game {
 
     // draw function.
     // all but most recently added bird in array should never be modified
-    // most recent bird is referred to with the currentBird member variable. Don't adjust other birds by array index
+    // most recent bird is referred to with the currBird member variable. Don't adjust other birds by array index
     // possibly track the margins and dimensions as class members to use during onTouch?
     public void draw(Canvas canvas){
         int wid = canvas.getWidth();
@@ -100,8 +100,8 @@ public class Game {
 
         gameField = (int)(minimumDimension*GAME_FIELD_SCALE); // compute size of gameplay field as square scaled to 95% of available screen
 
-        float marginX = (wid-gameField)/2;
-        float marginY = (hit-gameField)/2;  // find space left in view, split in half to use as margins on field of play
+        marginX = (wid-gameField)/2;
+        marginY = (hit-gameField)/2;  // find space left in view, split in half to use as margins on field of play
 
         canvas.drawRect(marginX, marginY, marginX + gameField, marginY + gameField, paintBorder);
 
@@ -111,7 +111,7 @@ public class Game {
     }
 
     // called from GameActivity, through GameView, to here. Updates current state of the game
-    public void setPlayState(GameState playState) {
+    public void setGameState(GameState playState) {
         this.playState = playState;
     }
     public GameState getPlayState() {
@@ -120,10 +120,12 @@ public class Game {
 
     public void AddBird(Bird bird){
         gameBirds.add(bird);
+        currBird = gameBirds.get(gameBirds.size()-1);
+        view.invalidate();
     }
 
-    public Bird getCurrentBird(){
-        return currentBird;
+    public Bird getCurrBird(){
+        return currBird;
     }
 
     // Hande Touch Events.
@@ -133,21 +135,29 @@ public class Game {
     // X and Y get the current touch event coordinates
     // Xp and Yp, declared as members here, are to be used to track the previous X and Y values to decide where objects have moved to (by subtraction)
     public boolean onTouchEvent(View view, MotionEvent event) {
-        X = (event.getX() );
-        Y = (event.getY() );
+        X = (event.getX() - marginX) / gameField;
+        Y = (event.getY() - marginY) / gameField;
+
+        currBird.setX(X);
+        currBird.setY(Y);
 
         switch (event.getActionMasked()) {
 
             case MotionEvent.ACTION_DOWN:
-                break;
+                return true;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                break;
+                return true;
 
             case MotionEvent.ACTION_MOVE:
                 // TODO: moving birds within playing area
-                break;
+
+                currBird.move(X - Xp, Y - Yp);
+                Xp = X;
+                Yp = Y;
+                view.invalidate();
+                return true;
         }
 
         return false;

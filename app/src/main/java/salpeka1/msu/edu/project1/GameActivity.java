@@ -3,7 +3,6 @@ package salpeka1.msu.edu.project1;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,7 +77,7 @@ public class GameActivity extends ActionBarActivity {
     {
         //TODO: on this button press, we affirm the bird's location and scan for a collision, update the Game State, and call ONGAMESTATECHANGE()
         // on a collision, update the Game State to reflect that the game has ended.
-        Bird playedBird = gameView.getGameObject().getCurrentBird();
+        Bird playedBird = gameView.getGameObject().getCurrBird();
         //CHECK BIRD COLLISION
         onGameStateChange(gameView);
     }

@@ -82,7 +82,7 @@ public class BirdSelectActivity extends ActionBarActivity {
             case MotionEvent.ACTION_DOWN:
                 // TODO: Check if a bird was actually touched, and if so which one. Save the bird's ID value to pass back to Game class
                 // TODO: If this was P1's bird choice, allow P2 to choose next. Otherwise, allow return to GameActivity
-                Selected(R.drawable.robin);  // always returns robin here
+                Selected(R.drawable.parrot);  // always returns robin here
 
                 return true;
 

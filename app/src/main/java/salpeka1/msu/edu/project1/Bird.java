@@ -13,12 +13,19 @@ public class Bird {
     final static float SCALE_IN_VIEW = 0.9f;
 
     private float X;  // x coordinate for the bird
-
     private float Y;  // y coordinate for the bird
 
     private Bitmap imageBird;  // image of the bird to draw in
 
     Game game;
+
+
+    public void setX(float x) {
+        X = x;
+    }
+    public void setY(float y) {
+        Y = y;
+    }
 
     public Bird(Context context, int id, Game pgame) {
         X = Y = .5f;
@@ -58,5 +65,10 @@ public class Bird {
         canvas.drawBitmap(imageBird, 0, 0, null);
 
         canvas.restore();
+    }
+
+    public void move(float dx, float dy) {
+        X += dx;
+        Y += dy;
     }
 }
