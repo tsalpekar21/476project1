@@ -70,6 +70,7 @@ public class GameActivity extends ActionBarActivity {
     public void onClickQuit(View view)
     {
         //TODO: either reuse the quit button or delete it entirely.
+
         //TODO: aside-we need a use for the back button
     }
 
@@ -77,8 +78,11 @@ public class GameActivity extends ActionBarActivity {
     {
         //TODO: on this button press, we affirm the bird's location and scan for a collision, update the Game State, and call ONGAMESTATECHANGE()
         // on a collision, update the Game State to reflect that the game has ended.
-        Bird playedBird = gameView.getGameObject().getCurrBird();
-        //CHECK BIRD COLLISION
+
+        if( gameView.getGameObject().CheckBirds() ){
+ //           gameView.setGameState(Game.GameState.end);  // on a collision true, game is over
+        }
+
         onGameStateChange(gameView);
     }
 
@@ -129,6 +133,9 @@ public class GameActivity extends ActionBarActivity {
 
             case end:
                 //TODO: endgame details and restarting of game
+                intent = new Intent(this, FinishedActivity.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
 
             default:
 

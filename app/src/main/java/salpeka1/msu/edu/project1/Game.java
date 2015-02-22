@@ -27,7 +27,7 @@ public class Game {
     Bird currBird;
     float X,Y,Xp,Yp;
     float marginX, marginY;
-    static final float GAME_FIELD_SCALE = 0.95f;
+    static final float GAME_FIELD_SCALE = 0.9f;
     private float gameField;
     private Paint paintBorder;  // paint object to outline playing field
 
@@ -138,28 +138,32 @@ public class Game {
         X = (event.getX() - marginX) / gameField;
         Y = (event.getY() - marginY) / gameField;
 
-        currBird.setX(X);
-        currBird.setY(Y);
-
         switch (event.getActionMasked()) {
 
             case MotionEvent.ACTION_DOWN:
                 return true;
-
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 return true;
 
             case MotionEvent.ACTION_MOVE:
                 // TODO: moving birds within playing area
-
-                currBird.move(X - Xp, Y - Yp);
-                Xp = X;
-                Yp = Y;
+                currBird.setX(X);
+                currBird.setY(Y);
                 view.invalidate();
                 return true;
         }
 
+        return false;
+    }
+
+
+    public boolean CheckBirds(){
+        for(int i = 0; i <= gameBirds.size()-2; i++){
+            if(currBird.collisionTest(gameBirds.get(i))){
+                return true;
+            }
+        }
         return false;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
 /**
  * Created by Alex on 2/10/2015.
@@ -14,6 +15,10 @@ public class Bird {
 
     private float X;  // x coordinate for the bird
     private float Y;  // y coordinate for the bird
+
+    private Rect rect;
+    // Rectangle we will use for intersection testing
+    private Rect overlap = new Rect();
 
     private Bitmap imageBird;  // image of the bird to draw in
 
@@ -33,6 +38,12 @@ public class Bird {
         this.game = pgame;
         imageBird = BitmapFactory.decodeResource(context.getResources(), id);
 
+        rect = new Rect();
+        setRect();
+    }
+
+    private void setRect() {
+        rect.set((int)X, (int)Y, (int)X+imageBird.getWidth(), (int)Y+imageBird.getHeight());
     }
 
     public void draw(Canvas canvas) {
@@ -47,7 +58,7 @@ public class Bird {
 
         float scaleFactor = (float) screenSize / (float) canvas.getWidth();
 
-        // Compute the margins so we center the puzzle
+        // Compute the margins
         int marginX = (wid - screenSize) / 2;
         int marginY = (hit - screenSize) / 2;
 
@@ -64,6 +75,7 @@ public class Bird {
         // Draw the bitmap
         canvas.drawBitmap(imageBird, 0, 0, null);
 
+
         canvas.restore();
     }
 
@@ -71,4 +83,58 @@ public class Bird {
         X += dx;
         Y += dy;
     }
+
+
+    // assuming this is for touch event to see if we've touched the bird itself.
+    public boolean hit(float testX, float testY) {
+        int pX = (int)((testX - X));
+        int pY = (int)((testY - Y));
+
+        if(pX < 0 || pX >= imageBird.getWidth() ||
+                pY < 0 || pY >= imageBird.getHeight()) {
+            return false;
+        }
+
+        // We are within the rectangle of the piece.
+        // Are we touching actual picture?
+        return (imageBird.getPixel(pX, pY) & 0xff000000) != 0;
+    }
+
+    /**
+     * Collision detection between two birds. This object is
+     * compared to the one referenced by other
+     * @param other Bird to compare to.
+     * @return True if there is any overlap between the two birds.
+     */
+    public boolean collisionTest(Bird other) {
+        // Do the rectangles overlap?
+        if(!Rect.intersects(rect, other.rect)) {
+            return false;
+        }
+
+        // Determine where the two images overlap
+        overlap.set(rect);
+        overlap.intersect(other.rect);
+
+        // We have overlap. Now see if we have any pixels in common
+        for(int r=overlap.top; r<overlap.bottom;  r++) {
+            int aY = (int)((r - Y));
+            int bY = (int)((r - other.Y));
+
+            for(int c=overlap.left;  c<overlap.right;  c++) {
+
+                int aX = (int)((c - X));
+                int bX = (int)((c - other.X));
+
+                if( (imageBird.getPixel(aX, aY) & 0x80000000) != 0 &&
+                        (other.imageBird.getPixel(bX, bY) & 0x80000000) != 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 }
