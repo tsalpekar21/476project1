@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 /*
@@ -17,6 +18,7 @@ import android.view.View;
 public class GameActivity extends ActionBarActivity {
 
     private GameView gameView;  // reference to the custom view that handles the game class
+    private TextView playerView;
     private String player1;     // varialbe to store player1 name
     private String player2;     // variable to store player2 name
     private int P1Bird, P2Bird;
@@ -32,6 +34,7 @@ public class GameActivity extends ActionBarActivity {
         setContentView(R.layout.activity_game);
 
         gameView = (GameView)findViewById(R.id.viewGame);
+        playerView = (TextView)findViewById(R.id.textPlayerName);
      //   onGameStateChange(gameView);
 
     }
@@ -135,18 +138,18 @@ public class GameActivity extends ActionBarActivity {
                 break;
 
             case roundA:
-                Log.i("Round Number: ", Integer.toString(RoundNumber));
-
                 P1Bird = getIntent().getExtras().getInt("p1bird");
                 P2Bird = getIntent().getExtras().getInt("p2bird");  // get from intent the chosen birds, saved to this activity
 
                 if (RoundNumber % 2 != 0) {
                     currPlayer = Player.Player1;
+                    playerView.setText(gameView.getGameObject().getNameById(1) + ", place your next bird - ");
                     gameView.CreateBird(P1Bird);  // generate P1's bird. This call places the bird object on the end of the game's array of birds and sets it as the current bird to manipulate during touch events
                     //Log.i("Round A Player 1", Integer.toString(P1Bird));
                 }
                 else {
                     currPlayer = Player.Player2;
+                    playerView.setText(gameView.getGameObject().getNameById(2) + ", place your next bird - ");
                     gameView.CreateBird(P2Bird); // generate P2's bird. see above comment
                     //Log.i("Round A Player 2", Integer.toString(P2Bird));
                 }
@@ -155,15 +158,17 @@ public class GameActivity extends ActionBarActivity {
                 break;
 
             case roundB:
-                Log.i("Round Number: ", Integer.toString(RoundNumber));
+                playerView.setText(player2 + ", place your next bird - ");
 
                 if (RoundNumber % 2 != 0) {
                     currPlayer = Player.Player2;
+                    playerView.setText(gameView.getGameObject().getNameById(2) + ", place your next bird - ");
                     gameView.CreateBird(P2Bird);  // generate P1's bird. This call places the bird object on the end of the game's array of birds and sets it as the current bird to manipulate during touch events
                     //Log.i("Round B Player 2", Integer.toString(P2Bird));
                 }
                 else {
                     currPlayer = Player.Player1;
+                    playerView.setText(gameView.getGameObject().getNameById(1) + ", place your next bird - ");
                     gameView.CreateBird(P1Bird); // generate P2's bird. see above comment
                     //Log.i("Round B Player 2", Integer.toString(P1Bird));
                 }

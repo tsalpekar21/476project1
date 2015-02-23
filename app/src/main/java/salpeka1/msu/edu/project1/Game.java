@@ -94,6 +94,24 @@ public class Game {
         P2.setID(2);
     }
 
+    public Player getPlayerById(int id){
+        if(id == 1){
+            return P1;
+        }
+        else{
+            return P2;
+        }
+    }
+
+    public String getNameById(int id){
+        if(id == 1){
+            return P1.getName();
+        }
+        else{
+            return P2.getName();
+        }
+    }
+
     // draw function.
     // all but most recently added bird in array should never be modified
     // most recent bird is referred to with the currBird member variable. Don't adjust other birds by array index

@@ -21,5 +21,15 @@
     <string name="robin">robin</string>
     <string name="swallow">swallow</string>
     <string name="hummingbird">hummingbird</string>
+    <string name="rules">How To Play the Flocking Game:\n
+        Players begin by each selecting a bird to play the round with. \n
+        Players then place their bird on the game area, one at a time. \n
+        Once both birds are set using the Set Bird button, \n
+        each player may choose a new bird for the next round. \n
+        Players will alternate placing order for each new round. \n
+        If a placed bird overlaps another \n
+        or goes outside the playing box, \n
+        that player to have placed it loses! \n
+    </string>
 
 </resources>
