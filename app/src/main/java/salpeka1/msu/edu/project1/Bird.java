@@ -24,8 +24,10 @@ public class Bird {
     private Rect overlap = new Rect();
 
     private Bitmap imageBird;  // image of the bird to draw in
+    private int imageID;
 
     Game game;
+
 
 
     public void setX(float x) {
@@ -51,10 +53,19 @@ public class Bird {
         X = Y = (float) (.5 * pgame.getGameField());
 
         this.game = pgame;
+        this.imageID = id;
         imageBird = BitmapFactory.decodeResource(context.getResources(), id);
 
         rect = new Rect();
         setRect();
+    }
+
+    public int getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
     }
 
     private void setRect() {

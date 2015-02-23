@@ -39,6 +39,22 @@ public class GameActivity extends ActionBarActivity {
 
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+
+        gameView.saveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle bundle) {
+        super.onRestoreInstanceState(bundle);
+
+        gameView.restoreInstanceState(bundle);
+        onResume();
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -50,6 +66,16 @@ public class GameActivity extends ActionBarActivity {
     // makes a call to onGameStateChange, which decides the next course of action to take for the game, based on the GameView's Game object
     protected void onResume(){
         super.onResume();
+
+        if(gameView.getGameState() == Game.GameState.init) {
+            player1 = getIntent().getExtras().getString("player1");
+            player2 = getIntent().getExtras().getString("player2");
+        }
+
+        if(gameView.getGameState() == Game.GameState.birdselect){
+            gameView.setGameState(Game.GameState.roundA);  // first player goes after this init
+        }
+
         onGameStateChange(gameView);  // when this activity takes the foreground, check the state of the game
     }
 
@@ -76,21 +102,14 @@ public class GameActivity extends ActionBarActivity {
     }
 
 
-    public void onClickQuit(View view)
-    {
-        //TODO: either reuse the quit button or delete it entirely.
-
-        //TODO: aside-we need a use for the back button
-        // Currently not accepting any back button pressing. Inherently doesn't make sense to use one here?
-        // So once the player has selected a bird, the player cannot reselect a bird for that round. Ok? Not ok?
-    }
-
     public void onClickSet(View view)
     {
-        //TODO: on this button press, we affirm the bird's location and scan for a collision, update the Game State, and call ONGAMESTATECHANGE()
-        // on a collision, update the Game State to reflect that the game has ended.
-
-        // UNCOMMENT WHEN COLLISION SYSTEM IS FIXED!!!!!!!!!
+        if(gameView.getGameState() == Game.GameState.roundB) {
+            gameView.setGameState(Game.GameState.birdselect);
+        }
+        if(gameView.getGameState() == Game.GameState.roundA) {
+            gameView.setGameState(Game.GameState.roundB);
+        }
 
         if( gameView.getGameObject().CheckBirds() ){
             if (currPlayer == Player.Player1){
@@ -100,6 +119,7 @@ public class GameActivity extends ActionBarActivity {
                 winner = player1;
             }
             gameView.setGameState(Game.GameState.end);  // on a collision true, game is over
+
         }
 
         onGameStateChange(gameView);
@@ -121,7 +141,7 @@ public class GameActivity extends ActionBarActivity {
                 intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);  // prevent multiples of the same activity. reuse from stack
                 intent.putExtra("player1", player1);
                 intent.putExtra("player2", player2);
-                gameView.setGameState(Game.GameState.roundA);  // first player goes after this init
+                gameView.setGameState(Game.GameState.birdselect);  // start gamestate after initializing at birdselect
                 startActivity(intent);
 
                 break;
@@ -132,7 +152,6 @@ public class GameActivity extends ActionBarActivity {
                 intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("player1", player1);  // pass player names to selection activity for textview to show
                 intent.putExtra("player2", player2);
-                gameView.setGameState(Game.GameState.roundA);  // first player goes after each bird select
                 startActivity(intent);
 
                 break;
@@ -153,7 +172,6 @@ public class GameActivity extends ActionBarActivity {
                     gameView.CreateBird(P2Bird); // generate P2's bird. see above comment
                     //Log.i("Round A Player 2", Integer.toString(P2Bird));
                 }
-                gameView.setGameState(Game.GameState.roundB);  // TODO: alternate players
 
                 break;
 
@@ -173,7 +191,6 @@ public class GameActivity extends ActionBarActivity {
                     //Log.i("Round B Player 2", Integer.toString(P1Bird));
                 }
                 //gameView.CreateBird(P2Bird);  // generate P2's bird. see above comment
-                gameView.setGameState(Game.GameState.birdselect);  // TODO: alternate players
 
                 break;
 

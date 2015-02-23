@@ -3,6 +3,7 @@ package salpeka1.msu.edu.project1;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,13 +23,21 @@ public class Game {
     // end: game over. hand off to end screen
     public enum GameState {init, birdselect, roundA, roundB, end}
 
-    private GameState playState;
+    private GameState gameState;
     GameView view;
+
+    public ArrayList<Bird> gameBirds;  // array of birds w/ locations to push into as they are placed
 
     Bird currBird;
     float lastX, lastY;
     float marginX, marginY;
     static final float GAME_FIELD_SCALE = 0.9f;
+
+    private final static String PLAYERNAMES = "PLAYERNAMES";
+    private final static String PLAYERIDS = "PLAYERIDS";
+    private final static String BIRDCOORDINATES = "BIRDCOORDINATES";
+    private final static String BIRDIMAGES = "BIRDIMAGES";
+    private final static String STATE = "GAMESTATE";
 
     public float getGameField() {
         return gameField;
@@ -44,21 +53,21 @@ public class Game {
     // currently, one Bird object is handled at a time, with the rest saved on the array to draw as needed
     // by tracking which player is up on the GameActivity, we shouldn't need to save the bird here again?
     private class Player {
-        private Bird currBird;
+//        private Bird currBird;
         private String name;
         private int ID;
-        public Bird getCurrBird() {
-            return currBird;
-        }
+  //      public Bird getCurrBird() {
+  //          return currBird;
+  //      }
         public String getName() {
             return name;
         }
         public int getID() {
             return ID;
         }
-        public void setCurrBird(Bird currBird) {
-            this.currBird = currBird;
-        }
+   //     public void setCurrBird(Bird currBird) {
+   //         this.currBird = currBird;
+   //     }
         public void setName(String name) {
             this.name = name;
         }
@@ -66,8 +75,6 @@ public class Game {
             this.ID = ID;
         }
         }
-
-    public ArrayList<Bird> gameBirds;  // array of birds w/ locations to push into as they are placed
 
     public Game(Context context, GameView view_context) {
         paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -77,7 +84,7 @@ public class Game {
         gameBirds = new ArrayList<Bird>();
 
         gameField = 0;
-        playState = GameState.init;
+        gameState = GameState.init;
 
         view = view_context;
 
@@ -112,6 +119,91 @@ public class Game {
         }
     }
 
+    // save game details in bundle
+    public void saveInstanceState(Bundle bundle) {
+        float[] BirdCoordinates = new float[gameBirds.size()*2];
+        int[] BirdImages = new int[gameBirds.size()];
+        String[] PlayerNames = new String[2];
+        int GameState;
+
+        for(int i = 0; i < gameBirds.size(); i++){
+            Bird bird = gameBirds.get(i);
+            BirdCoordinates[i*2] = bird.getX();
+            BirdCoordinates[i*2+1] = bird.getY();
+        }
+        bundle.putFloatArray(BIRDCOORDINATES, BirdCoordinates);
+
+        for(int j = 0; j < gameBirds.size(); j++){
+            BirdImages[j] = gameBirds.get(j).getImageID();
+        }
+        bundle.putIntArray(BIRDIMAGES, BirdImages);
+
+        PlayerNames[0] = P1.getName();
+        PlayerNames[1] = P2.getName();
+        bundle.putStringArray(PLAYERNAMES, PlayerNames);
+
+        switch(gameState){
+            case init:
+                GameState = 0;
+                break;
+            case birdselect:
+                GameState = 1;
+                break;
+            case roundA:
+                GameState = 2;
+                break;
+            case roundB:
+                GameState = 3;
+                break;
+            case end:
+                GameState = 4;
+                break;
+            default:
+                GameState = 0;
+        }
+        bundle.putInt(STATE, GameState);
+
+    }
+
+    public void restoreInstanceState(Bundle bundle){
+        float[] BirdCoordinates = bundle.getFloatArray(BIRDCOORDINATES);
+        int[] BirdImages = bundle.getIntArray(BIRDIMAGES);
+        String[] PlayerNames = bundle.getStringArray(PLAYERNAMES);
+        int GameState = bundle.getInt(STATE);
+
+        for( int i = 0; i < BirdImages.length; i++){
+            Bird bird = new Bird(view.getContext(), BirdImages[i], this);
+            bird.setX(BirdCoordinates[i*2]);
+            bird.setY(BirdCoordinates[i*2+1]);
+            gameBirds.add(bird);
+        }
+
+        SetPlayers(PlayerNames[0], PlayerNames[1]);
+
+        switch(GameState){
+            case 0:
+                gameState = Game.GameState.init;
+                break;
+            case 1:
+                gameState = Game.GameState.birdselect;
+                break;
+            case 2:
+                gameState = Game.GameState.roundA;
+                currBird = gameBirds.get(gameBirds.size()-1);
+                break;
+            case 3:
+                gameState = Game.GameState.roundB;
+                currBird = gameBirds.get(gameBirds.size()-1);
+                break;
+            case 4:
+                gameState = Game.GameState.end;
+                break;
+            default:
+                gameState = Game.GameState.init;
+        }
+
+    }
+
     // draw function.
     // all but most recently added bird in array should never be modified
     // most recent bird is referred to with the currBird member variable. Don't adjust other birds by array index
@@ -135,10 +227,10 @@ public class Game {
 
     // called from GameActivity, through GameView, to here. Updates current state of the game
     public void setGameState(GameState playState) {
-        this.playState = playState;
+        this.gameState = playState;
     }
-    public GameState getPlayState() {
-        return playState;
+    public GameState getGameState() {
+        return gameState;
     }
 
     public void AddBird(Bird bird){
@@ -182,8 +274,8 @@ public class Game {
 //                if (x - wid/2 < marginX) currBird.setX(marginX);
 //                if (y - hit/2 < marginY) currBird.setY(marginY);
 
-                Log.i("X", Float.toString(x));
-                Log.i("Y", Float.toString(y));
+//                Log.i("X", Float.toString(x));
+//                Log.i("Y", Float.toString(y));
 
                 lastX = event.getX();
                 lastY = event.getY();

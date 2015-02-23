@@ -3,6 +3,7 @@ package salpeka1.msu.edu.project1;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,7 +47,7 @@ public class GameView extends View {
 
     // check and make updates to the game object's current state, as prompted by GameActivity.onGameStateChange()
     public Game.GameState getGameState(){
-        return game.getPlayState();
+        return game.getGameState();
     }
     public void setGameState(Game.GameState playstate){
         game.setGameState(playstate);
@@ -54,6 +55,12 @@ public class GameView extends View {
 
     public Game getGameObject(){return game;}
 
+    public void saveInstanceState(Bundle bundle) {
+        game.saveInstanceState(bundle);
+    }
+    public void restoreInstanceState(Bundle bundle){
+        game.restoreInstanceState(bundle);
+    }
 
     //generate a new bird for the game to handle. this new bird is set at the end of the array and also referenced as the current bird to move around
     public void CreateBird(int birdID){
