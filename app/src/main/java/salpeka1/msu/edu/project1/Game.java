@@ -3,6 +3,7 @@ package salpeka1.msu.edu.project1;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -25,9 +26,14 @@ public class Game {
     GameView view;
 
     Bird currBird;
-    float X,Y,Xp,Yp;
+    float lastX, lastY;
     float marginX, marginY;
     static final float GAME_FIELD_SCALE = 0.9f;
+
+    public float getGameField() {
+        return gameField;
+    }
+
     private float gameField;
     private Paint paintBorder;  // paint object to outline playing field
 
@@ -69,7 +75,6 @@ public class Game {
         paintBorder.setStrokeWidth(5.f);
 
         gameBirds = new ArrayList<Bird>();
-   //    gameBirds.add(new Bird(context, R.drawable.ostrich, this));
 
         gameField = 0;
         playState = GameState.init;
@@ -135,12 +140,11 @@ public class Game {
     // X and Y get the current touch event coordinates
     // Xp and Yp, declared as members here, are to be used to track the previous X and Y values to decide where objects have moved to (by subtraction)
     public boolean onTouchEvent(View view, MotionEvent event) {
-        X = (event.getX() - marginX) / gameField;
-        Y = (event.getY() - marginY) / gameField;
-
         switch (event.getActionMasked()) {
 
             case MotionEvent.ACTION_DOWN:
+                lastX = event.getX();
+                lastY = event.getY();
                 return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -148,8 +152,24 @@ public class Game {
 
             case MotionEvent.ACTION_MOVE:
                 // TODO: moving birds within playing area
-                currBird.setX(X);
-                currBird.setY(Y);
+                float x = currBird.getX();
+                float y = currBird.getY();
+                float wid = currBird.getWidth();
+                float hit = currBird.getHeight();
+
+                currBird.move(event.getX() - lastX, event.getY() - lastY);
+
+//                if (x + wid/2 + marginX > gameField) currBird.setX(gameField + marginX);
+//                if (y + hit/2 + marginY > gameField) currBird.setY(gameField + marginY);
+//                if (x - wid/2 < marginX) currBird.setX(marginX);
+//                if (y - hit/2 < marginY) currBird.setY(marginY);
+
+                Log.i("X", Float.toString(x));
+                Log.i("Y", Float.toString(y));
+
+                lastX = event.getX();
+                lastY = event.getY();
+
                 view.invalidate();
                 return true;
         }

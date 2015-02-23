@@ -1,11 +1,10 @@
 package salpeka1.msu.edu.project1;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -66,29 +65,30 @@ public class BirdSelectActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickGame(View view)
-    {
-        // unused.
-        //TODO: remove the button from this view. function returns to GameActivity on P2's choice of bird
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        float relX = (event.getX());
-        float relY = (event.getY());
-
-        switch(event.getActionMasked()){
-            case MotionEvent.ACTION_DOWN:
-                // TODO: Check if a bird was actually touched, and if so which one. Save the bird's ID value to pass back to Game class
-                // TODO: If this was P1's bird choice, allow P2 to choose next. Otherwise, allow return to GameActivity
-                Selected(R.drawable.parrot);  // always returns robin here
-
-                return true;
-
+    public void onBirdSelect(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.ostrich:
+                Selected(R.drawable.ostrich);
+                break;
+            case R.id.parrot:
+                Selected(R.drawable.parrot);
+                break;
+            case R.id.robin:
+                Selected(R.drawable.robin);
+                break;
+            case R.id.swallow:
+                Selected(R.drawable.swallow);
+                break;
+            case R.id.hummingbird:
+                Selected(R.drawable.hummingbird);
+                break;
+            default:
+                // If you've reached this statement, there's an error!
+                Selected(R.drawable.ic_launcher);
+                break;
         }
 
-        return false;
     }
 
     public void Selected(int birdID){
@@ -96,8 +96,7 @@ public class BirdSelectActivity extends ActionBarActivity {
             P1Bird = birdID;
             t.setText(player2+", Now You Choose a Bird");
             returnSentinel = true; // ready to return on next call here
-        }
-        else{
+        } else {
             P2Bird = birdID;
             Intent intent = new Intent(this, GameActivity.class);
             intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

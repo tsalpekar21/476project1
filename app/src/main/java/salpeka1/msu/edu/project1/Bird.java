@@ -13,8 +13,11 @@ public class Bird {
 
     final static float SCALE_IN_VIEW = 0.9f;
 
-    private float X;  // x coordinate for the bird
-    private float Y;  // y coordinate for the bird
+    private float X = 0;  // x coordinate for the bird
+    private float Y = 0;  // y coordinate for the bird
+
+    private int marginX;
+    private int marginY;
 
     private Rect rect;
     // Rectangle we will use for intersection testing
@@ -27,13 +30,25 @@ public class Bird {
 
     public void setX(float x) {
         X = x;
+        setRect();
     }
     public void setY(float y) {
         Y = y;
+        setRect();
     }
 
+    public float getX() { return X; }
+
+    public float getY() { return Y; }
+
+    public float getHeight() { return imageBird.getHeight(); }
+
+    public float getWidth() { return imageBird.getWidth(); }
+
+    public Rect getRect() { return rect; }
+
     public Bird(Context context, int id, Game pgame) {
-        X = Y = .5f;
+        X = Y = (float) (.5 * pgame.getGameField());
 
         this.game = pgame;
         imageBird = BitmapFactory.decodeResource(context.getResources(), id);
@@ -59,13 +74,13 @@ public class Bird {
         float scaleFactor = (float) screenSize / (float) canvas.getWidth();
 
         // Compute the margins
-        int marginX = (wid - screenSize) / 2;
-        int marginY = (hit - screenSize) / 2;
+        marginX = (wid - screenSize) / 2;
+        marginY = (hit - screenSize) / 2;
 
         canvas.save();
 
         // Convert x,y to pixels and add the margin, then draw
-        canvas.translate(marginX + X * screenSize, marginY + Y * screenSize);
+        canvas.translate(X + marginX, Y + marginY);
 
         canvas.scale(scaleFactor, scaleFactor);
 
@@ -75,13 +90,13 @@ public class Bird {
         // Draw the bitmap
         canvas.drawBitmap(imageBird, 0, 0, null);
 
-
         canvas.restore();
     }
 
     public void move(float dx, float dy) {
         X += dx;
         Y += dy;
+        setRect();
     }
 
 

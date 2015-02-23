@@ -78,6 +78,8 @@ public class GameActivity extends ActionBarActivity {
         //TODO: either reuse the quit button or delete it entirely.
 
         //TODO: aside-we need a use for the back button
+        // Currently not accepting any back button pressing. Inherently doesn't make sense to use one here?
+        // So once the player has selected a bird, the player cannot reselect a bird for that round. Ok? Not ok?
     }
 
     public void onClickSet(View view)
@@ -87,15 +89,15 @@ public class GameActivity extends ActionBarActivity {
 
         // UNCOMMENT WHEN COLLISION SYSTEM IS FIXED!!!!!!!!!
 
-//        if( gameView.getGameObject().CheckBirds() ){
-//            if (currPlayer == Player.Player1){
-//                winner = player2;
-//            }
-//            else{
-//                winner = player1;
-//            }
-//            gameView.setGameState(Game.GameState.end);  // on a collision true, game is over
-//        }
+        if( gameView.getGameObject().CheckBirds() ){
+            if (currPlayer == Player.Player1){
+                winner = player2;
+            }
+            else{
+                winner = player1;
+            }
+            gameView.setGameState(Game.GameState.end);  // on a collision true, game is over
+        }
 
         onGameStateChange(gameView);
     }
@@ -182,5 +184,8 @@ public class GameActivity extends ActionBarActivity {
                 break; // GameActivity.onReturn() calls this to find current state. in init and birdselect, start bird select activity. on rounds, hand off to view's touch handler. on end, start ending activity
         }
     }
+
+    @Override
+    public void onBackPressed() {} // Do nothing if the back button is pressed on this activity
 
 }
