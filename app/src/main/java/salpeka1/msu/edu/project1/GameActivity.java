@@ -1,9 +1,8 @@
 package salpeka1.msu.edu.project1;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -162,13 +161,13 @@ public class GameActivity extends ActionBarActivity {
 
                 if (RoundNumber % 2 != 0) {
                     currPlayer = Player.Player1;
-                    playerView.setText(gameView.getGameObject().getNameById(1) + ", place your next bird - ");
+                    playerView.setText(gameView.getGameObject().getNameById(1) + ", place your next bird ");
                     gameView.CreateBird(P1Bird);  // generate P1's bird. This call places the bird object on the end of the game's array of birds and sets it as the current bird to manipulate during touch events
                     //Log.i("Round A Player 1", Integer.toString(P1Bird));
                 }
                 else {
                     currPlayer = Player.Player2;
-                    playerView.setText(gameView.getGameObject().getNameById(2) + ", place your next bird - ");
+                    playerView.setText(gameView.getGameObject().getNameById(2) + ", place your next bird ");
                     gameView.CreateBird(P2Bird); // generate P2's bird. see above comment
                     //Log.i("Round A Player 2", Integer.toString(P2Bird));
                 }

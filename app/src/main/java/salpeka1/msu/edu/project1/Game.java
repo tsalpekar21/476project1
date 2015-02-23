@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -53,21 +52,14 @@ public class Game {
     // currently, one Bird object is handled at a time, with the rest saved on the array to draw as needed
     // by tracking which player is up on the GameActivity, we shouldn't need to save the bird here again?
     private class Player {
-//        private Bird currBird;
         private String name;
         private int ID;
-  //      public Bird getCurrBird() {
-  //          return currBird;
-  //      }
         public String getName() {
             return name;
         }
         public int getID() {
             return ID;
         }
-   //     public void setCurrBird(Bird currBird) {
-   //         this.currBird = currBird;
-   //     }
         public void setName(String name) {
             this.name = name;
         }
@@ -104,8 +96,7 @@ public class Game {
     public Player getPlayerById(int id){
         if(id == 1){
             return P1;
-        }
-        else{
+        } else {
             return P2;
         }
     }
@@ -113,8 +104,7 @@ public class Game {
     public String getNameById(int id){
         if(id == 1){
             return P1.getName();
-        }
-        else{
+        } else {
             return P2.getName();
         }
     }
