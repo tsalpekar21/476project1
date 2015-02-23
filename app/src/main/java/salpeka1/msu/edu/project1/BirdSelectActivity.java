@@ -29,6 +29,11 @@ public class BirdSelectActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle bundle) {
+
+    }
+
+    @Override
     protected void onResume(){
         super.onResume();
 

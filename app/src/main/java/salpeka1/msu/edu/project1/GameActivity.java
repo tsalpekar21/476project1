@@ -34,7 +34,6 @@ public class GameActivity extends ActionBarActivity {
 
         gameView = (GameView)findViewById(R.id.viewGame);
         playerView = (TextView)findViewById(R.id.textPlayerName);
-     //   onGameStateChange(gameView);
 
     }
 

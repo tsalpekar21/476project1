@@ -15,75 +15,77 @@
         android:textSize="20sp" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/tophalf"
-        android:layout_below="@id/playerToSelect">
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <ImageView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ostrich"
-            android:src="@drawable/ostrich"
-            android:contentDescription="@string/ostrich"
-            android:layout_weight="1"
-            android:onClick="onBirdSelect"
-            android:adjustViewBounds="true" />
+            android:orientation="horizontal"
+            android:id="@+id/tophalf"
+            android:layout_gravity="center">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/parrot"
-            android:src="@drawable/parrot"
-            android:contentDescription="@string/parrot"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:onClick="onBirdSelect"
-            android:adjustViewBounds="false" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/robin"
-            android:src="@drawable/robin"
-            android:contentDescription="@string/robin"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:onClick="onBirdSelect"
-            android:adjustViewBounds="false" />
-
-    </LinearLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/ostrich"
+                android:src="@drawable/ostrich"
+                android:contentDescription="@string/ostrich"
+                android:layout_weight="1"
+                android:onClick="onBirdSelect"
+                android:adjustViewBounds="false" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/tophalf"
-        android:id="@+id/bottomhalf">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/robin"
+                android:src="@drawable/robin"
+                android:contentDescription="@string/robin"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:onClick="onBirdSelect"
+                android:adjustViewBounds="false" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/swallow"
-            android:src="@drawable/swallow"
-            android:contentDescription="@string/swallow"
-            android:layout_weight="1"
-            android:onClick="onBirdSelect"
-            android:adjustViewBounds="false" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/swallow"
+                android:src="@drawable/swallow"
+                android:contentDescription="@string/swallow"
+                android:layout_weight="1"
+                android:onClick="onBirdSelect"
+                android:adjustViewBounds="false"
+                android:layout_gravity="center" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/hummingbird"
-            android:src="@drawable/hummingbird"
-            android:contentDescription="@string/hummingbird"
-            android:layout_weight="1"
-            android:onClick="onBirdSelect"
-            android:adjustViewBounds="false" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/parrot"
+                android:src="@drawable/parrot"
+                android:contentDescription="@string/parrot"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:onClick="onBirdSelect"
+                android:adjustViewBounds="false" />
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/hummingbird"
+                android:src="@drawable/hummingbird"
+                android:contentDescription="@string/hummingbird"
+                android:layout_weight="1"
+                android:onClick="onBirdSelect"
+                android:adjustViewBounds="false"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+
 
 </RelativeLayout>
