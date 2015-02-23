@@ -85,6 +85,8 @@ public class GameActivity extends ActionBarActivity {
         //TODO: on this button press, we affirm the bird's location and scan for a collision, update the Game State, and call ONGAMESTATECHANGE()
         // on a collision, update the Game State to reflect that the game has ended.
 
+        // UNCOMMENT WHEN COLLISION SYSTEM IS FIXED!!!!!!!!!
+
 //        if( gameView.getGameObject().CheckBirds() ){
 //            if (currPlayer == Player.Player1){
 //                winner = player2;
