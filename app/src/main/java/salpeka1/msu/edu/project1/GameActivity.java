@@ -176,7 +176,7 @@ public class GameActivity extends ActionBarActivity {
                 //TODO: endgame details and restarting of game
                 intent = new Intent(this, FinishedActivity.class);
                 intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                intent.putExtra("Winner", winner);
+                intent.putExtra("winner", winner);
                 startActivity(intent);
 
             default:
