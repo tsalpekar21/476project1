@@ -15,7 +15,7 @@
     <string name="finished">Player 1 Wins !</string>
     <string name="select">Bird Select Screen</string>
     <string name="game">Return to Game</string>
-    <string name="next_round">Restart Game</string>
+    <string name="next_round">Click Here to Restart The Game</string>
     <string name="ostrich">Ostrich</string>
     <string name="parrot">parrot</string>
     <string name="robin">robin</string>

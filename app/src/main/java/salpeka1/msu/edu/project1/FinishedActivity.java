@@ -6,14 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class FinishedActivity extends ActionBarActivity {
+
+    private String winner;
+    private TextView endingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finished);
+
+        winner = getIntent().getExtras().getString("winner");
+        endingText = (TextView)findViewById(R.id.endingText);
+        endingText.setText(winner + " Wins!");
     }
 
 
@@ -42,7 +50,7 @@ public class FinishedActivity extends ActionBarActivity {
     public void onClickGame(View view)
     {
         // this button click will, instead of pulling up BirdSelectActivity, lock a bird's location in on the game field and call a check for endgame conditions
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
