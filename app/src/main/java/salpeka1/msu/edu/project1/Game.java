@@ -255,15 +255,21 @@ public class Game {
                 // TODO: moving birds within playing area
                 float x = currBird.getX();
                 float y = currBird.getY();
+
                 float wid = currBird.getWidth();
                 float hit = currBird.getHeight();
 
                 currBird.move(event.getX() - lastX, event.getY() - lastY);
 
-                if (x + marginX > gameField) currBird.setX(gameField + marginX);
+                if (x + wid/2 > gameField) currBird.setX(gameField - wid/2);
+                if (y + hit/2 > gameField) currBird.setY(gameField - hit/2);
+                if (x - wid/2 < 0) currBird.setX(wid/2);
+                if (y - hit/2 < 0) currBird.setY(hit/2);
 
                 Log.i("X", Float.toString(x));
                 Log.i("Y", Float.toString(y));
+                Log.i("Margin X", Float.toString(marginX));
+                Log.i("Margin Y", Float.toString(marginY));
 
                 lastX = event.getX();
                 lastY = event.getY();
