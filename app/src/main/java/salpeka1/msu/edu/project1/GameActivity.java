@@ -199,6 +199,8 @@ public class GameActivity extends ActionBarActivity {
                 //TODO: endgame details and restarting of game
                 intent = new Intent(this, FinishedActivity.class);
                 intent.putExtra("winner", winner);
+                intent.putExtra("rounds", Integer.toString(RoundNumber));
+                //Log.i("Rounds Played: ", RoundNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 gameView.setGameState(Game.GameState.birdselect);
                 startActivity(intent);

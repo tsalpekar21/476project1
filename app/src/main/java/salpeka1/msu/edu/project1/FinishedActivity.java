@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class FinishedActivity extends ActionBarActivity {
 
-    private String winner;
+    private String winner, rounds;
     private TextView endingText;
 
     @Override
@@ -19,9 +19,7 @@ public class FinishedActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finished);
 
-        winner = getIntent().getExtras().getString("winner");
-        endingText = (TextView)findViewById(R.id.endingText);
-        endingText.setText(winner + " Wins!");
+        displayText();
     }
 
 
@@ -53,6 +51,14 @@ public class FinishedActivity extends ActionBarActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    public void displayText()
+    {
+        winner = getIntent().getExtras().getString("winner");
+        rounds = getIntent().getExtras().getString("rounds");
+        endingText = (TextView)findViewById(R.id.endingText);
+        endingText.setText("After a gruelling battle lasting " + rounds + " rounds, " + winner + " has achieved Victory!");
     }
 
     @Override
