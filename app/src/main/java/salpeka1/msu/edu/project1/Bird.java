@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
 /**
  * Created by Alex on 2/10/2015.
@@ -97,6 +98,9 @@ public class Bird {
 
         // This magic code makes the center of the piece at 0, 0
         canvas.translate(-imageBird.getWidth() / 2, -imageBird.getHeight() / 2);
+
+        Log.i("Bird Draw X", Float.toString(X));
+        Log.i("Bird Draw Y", Float.toString(Y));
 
         // Draw the bitmap
         canvas.drawBitmap(imageBird, 0, 0, null);

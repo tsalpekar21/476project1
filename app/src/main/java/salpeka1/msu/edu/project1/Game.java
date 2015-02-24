@@ -266,10 +266,8 @@ public class Game {
                 if (x - wid/2 < 0) currBird.setX(wid/2);
                 if (y - hit/2 < 0) currBird.setY(hit/2);
 
-                Log.i("X", Float.toString(x));
-                Log.i("Y", Float.toString(y));
-                Log.i("Margin X", Float.toString(marginX));
-                Log.i("Margin Y", Float.toString(marginY));
+                Log.i("Game Draw X", Float.toString(x));
+                Log.i("Game Draw Y", Float.toString(y));
 
                 lastX = event.getX();
                 lastY = event.getY();
