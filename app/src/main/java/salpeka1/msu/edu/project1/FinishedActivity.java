@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 public class FinishedActivity extends ActionBarActivity {
 
-    private String winner, rounds;
-    private TextView endingText;
-
+    private String winner, rounds, player1, player2, player1Count, player2Count, loser;
+    private TextView endingText, player1Text, player2Text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +55,18 @@ public class FinishedActivity extends ActionBarActivity {
     public void displayText()
     {
         winner = getIntent().getExtras().getString("winner");
+        loser = getIntent().getExtras().getString("loser");
         rounds = getIntent().getExtras().getString("rounds");
+        player1 = getIntent().getExtras().getString("player1");
+        player2 = getIntent().getExtras().getString("player2");
+        player1Count = getIntent().getExtras().getString("player1Count");
+        player2Count = getIntent().getExtras().getString("player2Count");
         endingText = (TextView)findViewById(R.id.endingText);
+        player1Text = (TextView)findViewById(R.id.player1Stats);
+        player2Text = (TextView)findViewById(R.id.player2Stats);
         endingText.setText("After a gruelling battle lasting " + rounds + " rounds, " + winner + " has achieved Victory!");
+        player1Text.setText("Birds Placed by " + player1 + ": " + player1Count);
+        player2Text.setText("Birds Placed by " + player2 + ": " + player2Count);
     }
 
     @Override
