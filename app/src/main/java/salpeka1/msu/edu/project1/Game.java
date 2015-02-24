@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -259,13 +260,10 @@ public class Game {
 
                 currBird.move(event.getX() - lastX, event.getY() - lastY);
 
-//                if (x + wid/2 + marginX > gameField) currBird.setX(gameField + marginX);
-//                if (y + hit/2 + marginY > gameField) currBird.setY(gameField + marginY);
-//                if (x - wid/2 < marginX) currBird.setX(marginX);
-//                if (y - hit/2 < marginY) currBird.setY(marginY);
+                if (x + marginX > gameField) currBird.setX(gameField + marginX);
 
-//                Log.i("X", Float.toString(x));
-//                Log.i("Y", Float.toString(y));
+                Log.i("X", Float.toString(x));
+                Log.i("Y", Float.toString(y));
 
                 lastX = event.getX();
                 lastY = event.getY();
