@@ -51,7 +51,10 @@ public class FinishedActivity extends ActionBarActivity {
     {
         // this button click will, instead of pulling up BirdSelectActivity, lock a bird's location in on the game field and call a check for endgame conditions
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {} // Do nothing if the back button is pressed on this activity
 }
