@@ -3,6 +3,7 @@ package salpeka1.msu.edu.project1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -112,9 +113,11 @@ public class GameActivity extends ActionBarActivity {
         if( gameView.getGameObject().CheckBirds() ){
             if (currPlayer == Player.Player1){
                 winner = player2;
+                Log.i("The Winner is ", player2);
             }
             else{
                 winner = player1;
+                Log.i("The Winner is ", player1);
             }
             gameView.setGameState(Game.GameState.end);  // on a collision true, game is over
 
@@ -195,8 +198,9 @@ public class GameActivity extends ActionBarActivity {
             case end:
                 //TODO: endgame details and restarting of game
                 intent = new Intent(this, FinishedActivity.class);
-                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("winner", winner);
+                //intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                gameView.setGameState(Game.GameState.birdselect);
                 startActivity(intent);
 
             default:
