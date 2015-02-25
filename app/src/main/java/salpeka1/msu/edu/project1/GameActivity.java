@@ -121,6 +121,7 @@ public class GameActivity extends ActionBarActivity {
             }
             gameView.setGameState(Game.GameState.end);  // on a collision true, game is over
 
+
         }
 
         onGameStateChange(gameView);

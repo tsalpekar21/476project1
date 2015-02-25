@@ -7,14 +7,12 @@
     <string name="player2">Player 2 :</string>
     <string name="action_settings">Settings</string>
     <string name="set_button">Set Bird</string>
-    <string name="quit_button">End Game</string>
     <string name="title_activity_bird_select">BirdSelect</string>
     <string name="title_activity_finished">Finished</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="continue_to_game">Continue</string>
     <string name="finished">Player 1 Wins !</string>
     <string name="select">Bird Select Screen</string>
-    <string name="game">Return to Game</string>
     <string name="next_round">Click Here to Restart The Game</string>
     <string name="ostrich">Ostrich</string>
     <string name="parrot">parrot</string>

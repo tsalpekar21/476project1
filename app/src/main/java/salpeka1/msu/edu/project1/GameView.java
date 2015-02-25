@@ -41,6 +41,7 @@ public class GameView extends View {
     // pass drawing functionality to the game class itself
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         game.draw(canvas);
 
     }

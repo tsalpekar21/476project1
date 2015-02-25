@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -30,7 +29,7 @@ public class Game {
 
     Bird currBird;
     float lastX, lastY;
-    float marginX, marginY;
+    float marginX, marginY, scaleFactor;
     static final float GAME_FIELD_SCALE = 0.9f;
 
     private final static String PLAYERNAMES = "PLAYERNAMES";
@@ -57,9 +56,6 @@ public class Game {
         private int ID;
         public String getName() {
             return name;
-        }
-        public int getID() {
-            return ID;
         }
         public void setName(String name) {
             this.name = name;
@@ -202,6 +198,7 @@ public class Game {
     public void draw(Canvas canvas){
         int wid = canvas.getWidth();
         int hit = canvas.getHeight();
+
         int minimumDimension = wid < hit ? wid : hit;  // compares wid to hit, chooses smallest value
 
         gameField = (int)(minimumDimension*GAME_FIELD_SCALE); // compute size of gameplay field as square scaled to 95% of available screen
@@ -209,17 +206,28 @@ public class Game {
         marginX = (wid-gameField)/2;
         marginY = (hit-gameField)/2;  // find space left in view, split in half to use as margins on field of play
 
+        scaleFactor = (float) gameField / (float) canvas.getWidth();
+
+        canvas.save();
+
         canvas.drawRect(marginX, marginY, marginX + gameField, marginY + gameField, paintBorder);
 
         for (Bird b : gameBirds) {
             b.draw(canvas);
         }
+
+        canvas.translate(marginX, marginY);
+
+        canvas.scale(scaleFactor, scaleFactor);
+
+        canvas.restore();
     }
 
     // called from GameActivity, through GameView, to here. Updates current state of the game
     public void setGameState(GameState playState) {
         this.gameState = playState;
     }
+
     public GameState getGameState() {
         return gameState;
     }
@@ -237,7 +245,6 @@ public class Game {
     // Hande Touch Events.
     // the main concern here is just moving the bird, which can be done during Action_Move
     // we don't care about up or down because we'll always be moving the bird, regardless of whether the player has touched it or not
-    // TODO: however, we do need to keep the birds from moving outside the bounds of the playing area
     // X and Y get the current touch event coordinates
     // Xp and Yp, declared as members here, are to be used to track the previous X and Y values to decide where objects have moved to (by subtraction)
     public boolean onTouchEvent(View view, MotionEvent event) {
@@ -252,7 +259,6 @@ public class Game {
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-                // TODO: moving birds within playing area
                 float x = currBird.getX();
                 float y = currBird.getY();
 
@@ -261,13 +267,10 @@ public class Game {
 
                 currBird.move(event.getX() - lastX, event.getY() - lastY);
 
-                if (x + wid/2 > gameField) currBird.setX(gameField - wid/2);
-                if (y + hit/2 > gameField) currBird.setY(gameField - hit/2);
-                if (x - wid/2 < 0) currBird.setX(wid/2);
-                if (y - hit/2 < 0) currBird.setY(hit/2);
-
-                Log.i("Game Draw X", Float.toString(x));
-                Log.i("Game Draw Y", Float.toString(y));
+                if (x > view.getWidth() - marginX - wid) currBird.setX(view.getWidth() - marginX - wid);
+                if (y > view.getHeight() - marginY - hit) currBird.setY(view.getHeight() - marginY - hit);
+                if (x < marginX) currBird.setX(marginX);
+                if (y < marginY) currBird.setY(marginY);
 
                 lastX = event.getX();
                 lastY = event.getY();
