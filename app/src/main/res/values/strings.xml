@@ -29,5 +29,6 @@
         or goes outside the playing box, \n
         that player to have placed it loses! \n
     </string>
-
+    <string name="player1Stats">Bird Metrics for Player 1</string>
+    <string name="player2Stats">Bird Metrics for Player 2</string>
 </resources>

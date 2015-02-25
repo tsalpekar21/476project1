@@ -10,9 +10,27 @@
     <TextView android:text="@string/finished" android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/endingText"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_weight="2"
+        android:gravity="center_horizontal|bottom"
+        android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="@string/player1Stats"
+        android:id="@+id/player1Stats"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_vertical|center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="@string/player2Stats"
+        android:id="@+id/player2Stats"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
