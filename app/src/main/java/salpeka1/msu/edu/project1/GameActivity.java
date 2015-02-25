@@ -156,6 +156,7 @@ public class GameActivity extends ActionBarActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("player1", player1);  // pass player names to selection activity for textview to show
                 intent.putExtra("player2", player2);
+                intent.putExtra("currentPlayer", currPlayer);
                 startActivity(intent);
 
                 break;

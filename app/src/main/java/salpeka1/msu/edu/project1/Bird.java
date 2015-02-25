@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
 /**
  * Created by Alex on 2/10/2015.
@@ -74,27 +75,12 @@ public class Bird {
 
     public void draw(Canvas canvas) {
 
-//        int wid = canvas.getWidth();
-//        int hit = canvas.getHeight();
-//
-//        // Determine the minimum of the two dimensions
-//        int minDim = wid < hit ? wid : hit;
-//
-//        int screenSize = (int)(minDim * SCALE_IN_VIEW);
-//
-//        // Compute the margins
-//        marginX = (wid - screenSize) / 2;
-//        marginY = (hit - screenSize) / 2;
-
-        canvas.save();
-
-        // Convert x,y to pixels and add the margin, then draw
-        canvas.translate(X, Y);
-
         // Draw the bitmap
-        canvas.drawBitmap(imageBird, 0, 0, null);
+        canvas.drawBitmap(imageBird, X, Y, null);
 
-        canvas.restore();
+        Log.i("X", Float.toString(X));
+        Log.i("Y", Float.toString(Y));
+
     }
 
     public void move(float dx, float dy) {

@@ -16,36 +16,56 @@ import android.widget.TextView;
 
 public class BirdSelectActivity extends ActionBarActivity {
 
-    private String player1, player2;
-    private int P1Bird, P2Bird;
+    private String[] players;
+    private int[] playerBirdIds;
     private TextView t;
-    private boolean returnSentinel;
+    private int selectedBirdId;
+    private enum State {FirstTurn, SecondTurn, Finish};
+    private State selectionState;
+    private int currentPlayer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         setContentView(R.layout.activity_bird_select);
+
+        players = new String[2];
+        playerBirdIds = new int[2];
+
+        t = (TextView)findViewById(R.id.playerToSelect);
+
+        players[0] = getIntent().getExtras().getString("player1");
+        players[1] = getIntent().getExtras().getString("player2");
+
+        currentPlayer = getIntent().getExtras().getInt("currentPlayer");
 
     }
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+
+        bundle.putIntArray("playerBirdIds", playerBirdIds);
+        bundle.putStringArray("players", players);
+        bundle.putSerializable("selectionState", selectionState);
+        bundle.putInt("currentPlayer", currentPlayer);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle bundle) {
+        playerBirdIds = bundle.getIntArray("playerBirdIds");
+        players = bundle.getStringArray("players");
+        selectionState = (State) bundle.getSerializable("selectionState");
+        currentPlayer = bundle.getInt("currentPlayer");
+
 
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-
-        t = (TextView)findViewById(R.id.playerToSelect);
-        player1 = getIntent().getExtras().getString("player1");
-        player2 = getIntent().getExtras().getString("player2");
-
-        t.setText(player1+", Choose a Bird");
-        //   onGameStateChange(gameView);
-
-        returnSentinel = false;
-
+        if (selectionState != null) SelectionStateChange(selectionState);
+        else SelectionStateChange(State.FirstTurn);
     }
 
     @Override
@@ -74,40 +94,68 @@ public class BirdSelectActivity extends ActionBarActivity {
         int id = view.getId();
         switch (id) {
             case R.id.ostrich:
-                Selected(R.drawable.ostrich);
+                selectedBirdId = R.drawable.ostrich;
                 break;
             case R.id.parrot:
-                Selected(R.drawable.parrot);
+                selectedBirdId = R.drawable.parrot;
                 break;
             case R.id.robin:
-                Selected(R.drawable.robin);
+                selectedBirdId = R.drawable.robin;
                 break;
             case R.id.swallow:
-                Selected(R.drawable.swallow);
+                selectedBirdId = R.drawable.swallow;
                 break;
             case R.id.hummingbird:
-                Selected(R.drawable.hummingbird);
+                selectedBirdId = R.drawable.hummingbird;
                 break;
             default:
                 // If you've reached this statement, there's an error!
-                Selected(R.drawable.ic_launcher);
+                selectedBirdId = R.drawable.ic_launcher;
                 break;
         }
 
+        SelectionStateChange(selectionState);
+
     }
 
-    public void Selected(int birdID){
-        if(!returnSentinel){ // on p1's choice
-            P1Bird = birdID;
-            t.setText(player2+", Now You Choose a Bird");
-            returnSentinel = true; // ready to return on next call here
-        } else {
-            P2Bird = birdID;
-            Intent intent = new Intent(this, GameActivity.class);
-            intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            intent.putExtra("p1bird",P1Bird);
-            intent.putExtra("p2bird",P2Bird);
-            startActivity(intent);
+    public void SelectionStateChange(State state) {
+        selectionState = state;
+
+        switch (state) {
+            case FirstTurn:
+                t.setText(players[currentPlayer] + ", choose a Bird");
+
+                if (selectedBirdId != 0) {
+                    playerBirdIds[currentPlayer] = selectedBirdId;
+                    selectedBirdId = 0;
+                    currentPlayer = currentPlayer == 0 ? 1 : 0;
+                    SelectionStateChange(State.SecondTurn);
+                }
+
+                break;
+
+            case SecondTurn:
+                t.setText(players[currentPlayer] + ", choose a Bird");
+
+                if (selectedBirdId != 0) {
+                    playerBirdIds[currentPlayer] = selectedBirdId;
+                    selectedBirdId = 0;
+                    SelectionStateChange(State.Finish);
+                }
+
+                break;
+
+            case Finish:
+                Intent intent = new Intent(this, GameActivity.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("p1bird",playerBirdIds[0]);
+                intent.putExtra("p2bird",playerBirdIds[1]);
+                selectionState = State.FirstTurn;
+                startActivity(intent);
+                break;
+
+            default:
+                break;
         }
     }
 }

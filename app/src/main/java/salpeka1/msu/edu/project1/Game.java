@@ -113,6 +113,7 @@ public class Game {
         String[] PlayerNames = new String[2];
         int GameState;
 
+
         for(int i = 0; i < gameBirds.size(); i++){
             Bird bird = gameBirds.get(i);
             BirdCoordinates[i*2] = bird.getX();
@@ -210,15 +211,15 @@ public class Game {
 
         canvas.save();
 
+        canvas.translate(marginX, marginY);
+
+        canvas.scale(scaleFactor, scaleFactor);
+
         canvas.drawRect(marginX, marginY, marginX + gameField, marginY + gameField, paintBorder);
 
         for (Bird b : gameBirds) {
             b.draw(canvas);
         }
-
-        canvas.translate(marginX, marginY);
-
-        canvas.scale(scaleFactor, scaleFactor);
 
         canvas.restore();
     }
