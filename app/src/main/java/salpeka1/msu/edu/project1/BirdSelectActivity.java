@@ -20,7 +20,7 @@ public class BirdSelectActivity extends ActionBarActivity {
     private int[] playerBirdIds;
     private TextView t;
     private int selectedBirdId;
-    private enum State {FirstTurn, SecondTurn, Finish};
+    private enum State {FirstTurn, SecondTurn, Finish}
     private State selectionState;
     private int currentPlayer;
 
@@ -53,6 +53,8 @@ public class BirdSelectActivity extends ActionBarActivity {
 
     @Override
     public void onRestoreInstanceState(Bundle bundle) {
+        playerBirdIds[0] = playerBirdIds[1] = 0;
+
         playerBirdIds = bundle.getIntArray("playerBirdIds");
         players = bundle.getStringArray("players");
         selectionState = (State) bundle.getSerializable("selectionState");
@@ -120,6 +122,7 @@ public class BirdSelectActivity extends ActionBarActivity {
 
     public void SelectionStateChange(State state) {
         selectionState = state;
+
 
         switch (state) {
             case FirstTurn:

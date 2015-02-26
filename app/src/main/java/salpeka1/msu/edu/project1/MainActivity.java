@@ -49,6 +49,8 @@ public class MainActivity extends ActionBarActivity {
         EditText player2 = (EditText) findViewById(R.id.player2);
         String player1_str = player1.getText().toString();
         String player2_str = player2.getText().toString();
+        player1_str = player1_str.isEmpty() ? "Player 1" : player1_str;
+        player2_str = player2_str.isEmpty() ? "Player 2" : player2_str;
         intent.putExtra("player1", player1_str);
         intent.putExtra("player2", player2_str);
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -31,6 +32,7 @@ public class Game {
     float lastX, lastY;
     float marginX, marginY, scaleFactor;
     static final float GAME_FIELD_SCALE = 0.9f;
+    int height, width;
 
     private final static String PLAYERNAMES = "PLAYERNAMES";
     private final static String PLAYERIDS = "PLAYERIDS";
@@ -197,15 +199,17 @@ public class Game {
     // most recent bird is referred to with the currBird member variable. Don't adjust other birds by array index
     // possibly track the margins and dimensions as class members to use during onTouch?
     public void draw(Canvas canvas){
-        int wid = canvas.getWidth();
-        int hit = canvas.getHeight();
+        width = canvas.getWidth();
+        height = canvas.getHeight();
 
-        int minimumDimension = wid < hit ? wid : hit;  // compares wid to hit, chooses smallest value
+        int minimumDimension = width < height ? width : height;  // compares wid to hit, chooses smallest value
 
         gameField = (int)(minimumDimension*GAME_FIELD_SCALE); // compute size of gameplay field as square scaled to 95% of available screen
 
-        marginX = (wid-gameField)/2;
-        marginY = (hit-gameField)/2;  // find space left in view, split in half to use as margins on field of play
+        marginX = (width-gameField)/2;
+        marginY = (height-gameField)/2;  // find space left in view, split in half to use as margins on field of play
+
+        Log.i("Game Draw", Float.toString(gameField));
 
         scaleFactor = (float) gameField / (float) canvas.getWidth();
 

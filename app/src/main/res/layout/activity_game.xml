@@ -9,6 +9,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/textPlayerName"
         android:textSize="20sp"
+        android:text="@string/sample_title"
         android:layout_gravity="center_horizontal"/>
 
     <view
