@@ -3,7 +3,6 @@ package salpeka1.msu.edu.project1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +22,14 @@ public class GameActivity extends ActionBarActivity {
     private String player2;     // variable to store player2 name
     private int P1Bird, P2Bird;
     private int RoundNumber = 1;    // Variable to keep track of Round Numbers.
-    private enum Player {Player1, Player2};
+    private enum Player {Player1, Player2}
     private int player1Count = 0;
     private int player2Count = 0;
     private Player currPlayer;
     private String winner;
     private boolean created = false;
+
+    private static final String PBIRDS = "PBIRDS";
 
 
     @Override
@@ -46,12 +47,21 @@ public class GameActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
 
+        int[] pbirds = new int[2];
+        pbirds[0] = P1Bird;
+        pbirds[1] = P2Bird;
+        bundle.putIntArray(PBIRDS, pbirds);
+
         gameView.saveInstanceState(bundle);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle bundle) {
         super.onRestoreInstanceState(bundle);
+
+        int[] pbirds = bundle.getIntArray(PBIRDS);
+        P1Bird = pbirds[0];
+        P2Bird = pbirds[1];
 
         gameView.restoreInstanceState(bundle);
         created = true;
@@ -117,11 +127,9 @@ public class GameActivity extends ActionBarActivity {
         if( gameView.getGameObject().CheckBirds() ){
             if (currPlayer == Player.Player1){
                 winner = player2;
-                Log.i("The Winner is ", player2);
             }
             else{
                 winner = player1;
-                Log.i("The Winner is ", player1);
             }
             gameView.setGameState(Game.GameState.end);  // on a collision true, game is over
 
@@ -172,14 +180,12 @@ public class GameActivity extends ActionBarActivity {
                     player1Count++;
                     playerView.setText(gameView.getGameObject().getNameById(1) + ", place your next bird ");
                     gameView.CreateBird(P1Bird);  // generate P1's bird. This call places the bird object on the end of the game's array of birds and sets it as the current bird to manipulate during touch events
-                    //Log.i("Round A Player 1", Integer.toString(P1Bird));
                 }
                 else {
                     currPlayer = Player.Player2;
                     player2Count++;
                     playerView.setText(gameView.getGameObject().getNameById(2) + ", place your next bird ");
                     gameView.CreateBird(P2Bird); // generate P2's bird. see above comment
-                    //Log.i("Round A Player 2", Integer.toString(P2Bird));
                 }
 
                 break;
@@ -192,16 +198,13 @@ public class GameActivity extends ActionBarActivity {
                     player2Count++;
                     playerView.setText(gameView.getGameObject().getNameById(2) + ", place your next bird ");
                     gameView.CreateBird(P2Bird);  // generate P1's bird. This call places the bird object on the end of the game's array of birds and sets it as the current bird to manipulate during touch events
-                    //Log.i("Round B Player 2", Integer.toString(P2Bird));
                 }
                 else {
                     currPlayer = Player.Player1;
                     player1Count++;
                     playerView.setText(gameView.getGameObject().getNameById(1) + ", place your next bird ");
                     gameView.CreateBird(P1Bird); // generate P2's bird. see above comment
-                    //Log.i("Round B Player 2", Integer.toString(P1Bird));
                 }
-                //gameView.CreateBird(P2Bird);  // generate P2's bird. see above comment
 
                 break;
 

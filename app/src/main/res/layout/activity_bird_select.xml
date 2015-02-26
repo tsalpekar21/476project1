@@ -14,14 +14,15 @@
         android:layout_centerHorizontal="true" />
 
 
-    <FrameLayout
+ <!--  <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent">  -->
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_below="@id/playerToSelect">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,7 +100,6 @@
 
 
 
-    </FrameLayout>
-
+ <!--   </FrameLayout>  -->
 
 </RelativeLayout>

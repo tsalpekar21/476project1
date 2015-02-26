@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -209,9 +208,7 @@ public class Game {
         marginX = (width-gameField)/2;
         marginY = (height-gameField)/2;  // find space left in view, split in half to use as margins on field of play
 
-        Log.i("Game Draw", Float.toString(gameField));
-
-        scaleFactor = (float) gameField / (float) canvas.getWidth();
+        scaleFactor = gameField / (float) canvas.getWidth();
 
         canvas.save();
 
@@ -289,6 +286,9 @@ public class Game {
 
 
     public boolean CheckBirds(){
+        if(gameBirds.size() == 0){
+            return false;
+        }
         for(int i = 0; i <= gameBirds.size()-2; i++){
             if(currBird.collisionTest(gameBirds.get(i))){
                 return true;

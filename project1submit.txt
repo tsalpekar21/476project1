@@ -8,24 +8,21 @@ When you have completed the project, complete the following form and include it 
 
 Member 1: Aasiruddin Walajahi
 
-Responsiblity: Responsible for the starting and ending acitivies.
+Responsiblity: Task 3 - Main focus was on game play activity and custom view integration
 
 
 
 Member 2: Taney Salpekar
 
-Responsiblity: Responsible for the bird selection and gameplay activities.
+Responsiblity: Task 2 - Responsible for the bird selection activity and sequencing
 
 
 
 Member 3: Alex Kambeitz
 
-Responsiblity: Setup the main skeleton of the game class; added buttons to move between activities.
+Responsiblity: Task 1 - Built the game class and other activities
 
 
 
-Member 4 (if applicable): 
-
-Responsiblity:
-
+All Team Members contributed to bug fixes and improvements in every area of the project, in addition to managing their assigned tasks.
 

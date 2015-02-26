@@ -63,6 +63,8 @@ public class GameView extends View {
         game.restoreInstanceState(bundle);
     }
 
+
+
     //generate a new bird for the game to handle. this new bird is set at the end of the array and also referenced as the current bird to move around
     public void CreateBird(int birdID){
         Bird bird = new Bird(this.getContext(), birdID, game);

@@ -15,9 +15,9 @@
         android:textSize="20sp" />
 
 
-    <FrameLayout
+<!--    <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent">  -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                 android:layout_gravity="center" />
         </LinearLayout>
 
-    </FrameLayout>
+ <!--   </FrameLayout>  -->
 
 
 

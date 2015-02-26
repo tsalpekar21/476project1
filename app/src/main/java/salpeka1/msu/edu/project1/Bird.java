@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
 
 /**
  * Created by Alex on 2/10/2015.
@@ -14,8 +13,8 @@ public class Bird {
 
     final static float SCALE_IN_VIEW = 0.9f;
 
-    private float X = 0;  // x coordinate for the bird
-    private float Y = 0;  // y coordinate for the bird
+    private float X = 0f;  // x coordinate for the bird
+    private float Y = 0f;  // y coordinate for the bird
 
     private int marginX;
     private int marginY;
@@ -77,10 +76,6 @@ public class Bird {
 
         // Draw the bitmap
         canvas.drawBitmap(imageBird, X, Y, null);
-
-        Log.i("X", Float.toString(X));
-        Log.i("Y", Float.toString(Y));
-
     }
 
     public void move(float dx, float dy) {

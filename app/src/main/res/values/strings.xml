@@ -32,4 +32,5 @@
     </string>
     <string name="player1Stats">Bird Metrics for Player 1</string>
     <string name="player2Stats">Bird Metrics for Player 2</string>
+    <string name="rules_tap">Tap for How to Play</string>
 </resources>
